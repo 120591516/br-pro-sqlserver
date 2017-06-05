@@ -17,7 +17,7 @@
 		<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="br.sqlserver.controller.filter.SysInfoFilter"></bean>
+			<bean class="jphs.log.controller.filter.SysInfoFilter"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	<!-- 资源映射 -->
@@ -50,8 +50,7 @@
     </bean>
     
     <!-- 工作的bean -->
-    <bean id="myJob" class="com.test.test.Myjob" />
-    <bean id="myJob2" class="com.test.test.Myjob2" />
+    <bean id="myJob" class="jphs.log.job.ParseLog" />
     
     <!-- job的配置开始 -->
     <bean id="myJobDetail"
@@ -60,16 +59,7 @@
             <ref bean="myJob" />
         </property>
         <property name="targetMethod">
-            <value>work</value>
-        </property>
-    </bean>
-    <bean id="myJobDetail2"
-        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject">
-            <ref bean="myJob2" />
-        </property>
-        <property name="targetMethod">
-            <value>work</value>
+            <value>readFileByLines</value>
         </property>
     </bean>
     <!-- job的配置结束 -->
@@ -100,7 +90,6 @@
         <property name="triggers">
             <list>
                 <ref bean="myJobTrigger"/>
-                <ref bean="myJobTrigger2"/>
             </list>
         </property>
     </bean>
