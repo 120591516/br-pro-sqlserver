@@ -149,58 +149,60 @@ public class ParseLog {
                 Criteria productCriteria = productExample.createCriteria();
                 productCriteria.andPathEqualTo(accesslog2.getProductPath());
                 List<Product> product = productMapper.selectByExample(productExample);
-                product.get(0).getId();
-                accesslog.setProductId(product.get(0).getId());
-                // 获取某一商品的各个时间段
-                List<AccesslogSpread> timeList = new ArrayList<>(select);
-                for (int i = 0; i < timeList.size(); i++) {
-                    for (int j = timeList.size() - 1; j > i; j--) {
-                        if (timeList.get(i).getStarttime().equals(timeList.get(j).getStarttime())) {
-                            timeList.remove(j);
-                        }
-                    }
-                }
-                for (AccesslogSpread accesslog3 : timeList) {
-                    Accesslog sourceTime = new Accesslog();
-                    sourceTime.setAccesstime(dayFormat.parse(dayTime));
-                    sourceTime.setProductId(product.get(0).getId());
-                    sourceTime.setStarttime(accesslog3.getStarttime());
-                    sourceTime.setEndtime(accesslog3.getEndtime());
-                    Predicate pvPredicate = new MyPredicate("starttime", accesslog3.getStarttime());
-                    List<AccesslogSpread> pv = (List<AccesslogSpread>) CollectionUtils.select(select, pvPredicate);
-                    System.out.println("时间段" + timeFormat.format(accesslog3.getStarttime()) + "--"
-                            + timeFormat.format(accesslog3.getEndtime()) + "的pv次数" + pv.size());
-                    sourceTime.setPv(pv.size());
-                    if (pv.size() > 1) {
-                        for (int i = 0; i < pv.size() - 1; i++) {
-                            for (int j = 1; j < pv.size(); j++) {
-                                if (pv.get(i).getIp().equals(pv.get(j).getIp())) {
-                                    pv.remove(j);
-                                }
+                if (product.size() > 0) {
+                    product.get(0).getId();
+                    accesslog.setProductId(product.get(0).getId());
+                    // 获取某一商品的各个时间段
+                    List<AccesslogSpread> timeList = new ArrayList<>(select);
+                    for (int i = 0; i < timeList.size(); i++) {
+                        for (int j = timeList.size() - 1; j > i; j--) {
+                            if (timeList.get(i).getStarttime().equals(timeList.get(j).getStarttime())) {
+                                timeList.remove(j);
                             }
                         }
                     }
+                    for (AccesslogSpread accesslog3 : timeList) {
+                        Accesslog sourceTime = new Accesslog();
+                        sourceTime.setAccesstime(dayFormat.parse(dayTime));
+                        sourceTime.setProductId(product.get(0).getId());
+                        sourceTime.setStarttime(accesslog3.getStarttime());
+                        sourceTime.setEndtime(accesslog3.getEndtime());
+                        Predicate pvPredicate = new MyPredicate("starttime", accesslog3.getStarttime());
+                        List<AccesslogSpread> pv = (List<AccesslogSpread>) CollectionUtils.select(select, pvPredicate);
+                        System.out.println("时间段" + timeFormat.format(accesslog3.getStarttime()) + "--"
+                                + timeFormat.format(accesslog3.getEndtime()) + "的pv次数" + pv.size());
+                        sourceTime.setPv(pv.size());
+                        if (pv.size() > 1) {
+                            for (int i = 0; i < pv.size() - 1; i++) {
+                                for (int j = 1; j < pv.size(); j++) {
+                                    if (pv.get(i).getIp().equals(pv.get(j).getIp())) {
+                                        pv.remove(j);
+                                    }
+                                }
+                            }
+                        }
 
-                    System.out.println("时间段" + timeFormat.format(accesslog3.getStarttime()) + "--"
-                            + timeFormat.format(accesslog3.getEndtime()) + "的uv次数" + pv.size());
-                    sourceTime.setUv(pv.size());
-                    logList.add(sourceTime);
+                        System.out.println("时间段" + timeFormat.format(accesslog3.getStarttime()) + "--"
+                                + timeFormat.format(accesslog3.getEndtime()) + "的uv次数" + pv.size());
+                        sourceTime.setUv(pv.size());
+                        logList.add(sourceTime);
 
-                }
-                accesslog.setStarttime(timeFormat.parse("00:00:00"));
-                accesslog.setEndtime(timeFormat.parse("23:59:59"));
-                accesslog.setPv(select.size());
-                System.out.println(accesslog2.getProductPath() + "------pv" + select.size());
-                for (int i = 0; i < select.size(); i++) {
-                    for (int j = select.size() - 1; j > i; j--) {
-                        if (select.get(i).getIp().equals(select.get(j).getIp())) {
-                            select.remove(j);
+                    }
+                    accesslog.setStarttime(timeFormat.parse("00:00:00"));
+                    accesslog.setEndtime(timeFormat.parse("23:59:59"));
+                    accesslog.setPv(select.size());
+                    System.out.println(accesslog2.getProductPath() + "------pv" + select.size());
+                    for (int i = 0; i < select.size(); i++) {
+                        for (int j = select.size() - 1; j > i; j--) {
+                            if (select.get(i).getIp().equals(select.get(j).getIp())) {
+                                select.remove(j);
+                            }
                         }
                     }
+                    accesslog.setUv(select.size());
+                    System.out.println(accesslog2.getProductPath() + "------uv" + select.size());
+                    logList.add(accesslog);
                 }
-                accesslog.setUv(select.size());
-                System.out.println(accesslog2.getProductPath() + "------uv" + select.size());
-                logList.add(accesslog);
             }
 
             for (Accesslog accesslog : logList) {
