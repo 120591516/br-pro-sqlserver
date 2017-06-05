@@ -32,6 +32,6 @@
 	<!-- 切面 -->
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* br.sqlserver.service.*.*(..))" />
+			pointcut="execution(* jphs.log.service.*.*(..))" />
 	</aop:config>
 </beans>

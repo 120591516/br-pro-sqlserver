@@ -28,7 +28,7 @@
 	</bean>
 	<!-- 配置扫描包，加载mapper代理对象 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="br.sqlserver.mapper"></property>
+		<property name="basePackage" value="jphs.log.mapper"></property>
 	</bean>
 	<bean id="log4jInitialization"
 		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">

@@ -1,43 +1,45 @@
 package jphs.log.pojo;
 
-public class Product {
-    private Integer id;
+import java.io.Serializable;
 
-    private String path;
+public class Product implements Serializable {
+	private Integer id;
 
-    private String name;
+	private String path;
 
-    private Integer productType;
+	private String name;
 
-    public Integer getId() {
-        return id;
-    }
+	private Integer productType;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getPath() {
-        return path;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setPath(String path) {
-        this.path = path == null ? null : path.trim();
-    }
+	public String getPath() {
+		return path;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setPath(String path) {
+		this.path = path == null ? null : path.trim();
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Integer getProductType() {
-        return productType;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setProductType(Integer productType) {
-        this.productType = productType;
-    }
+	public Integer getProductType() {
+		return productType;
+	}
+
+	public void setProductType(Integer productType) {
+		this.productType = productType;
+	}
 }

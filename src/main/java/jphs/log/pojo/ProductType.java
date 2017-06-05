@@ -1,23 +1,25 @@
 package jphs.log.pojo;
 
-public class ProductType {
-    private Integer id;
+import java.io.Serializable;
 
-    private String name;
+public class ProductType implements Serializable {
+	private Integer id;
 
-    public Integer getId() {
-        return id;
-    }
+	private String name;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 }

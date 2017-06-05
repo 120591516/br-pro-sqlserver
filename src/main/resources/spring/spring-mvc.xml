@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="br.sqlserver.controller" />
+	<context:component-scan base-package="jphs.log.controller" />
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -50,13 +50,13 @@
     </bean>
     
     <!-- 工作的bean -->
-    <bean id="myJob" class="jphs.log.job.ParseLog" />
+    <bean id="parseLog" class="jphs.log.service.ParseLog" />
     
     <!-- job的配置开始 -->
     <bean id="myJobDetail"
         class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
-            <ref bean="myJob" />
+            <ref bean="parseLog" />
         </property>
         <property name="targetMethod">
             <value>readFileByLines</value>
@@ -71,15 +71,7 @@
         </property>
         <property name="cronExpression">
             <value>0/5 * * * * ?</value>
-        </property>
-    </bean>
-    <bean id="myJobTrigger2"
-        class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail">
-            <ref bean="myJobDetail2" />
-        </property>
-        <property name="cronExpression">
-            <value>0 0 0 * * ?</value>
+            <!-- <value>0 0 0 * * ?</value> -->
         </property>
     </bean>
     <!-- 调度的配置结束 -->
