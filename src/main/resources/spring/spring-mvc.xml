@@ -50,7 +50,7 @@
     </bean>
     
     <!-- 工作的bean -->
-    <bean id="parseLog" class="jphs.log.service.ParseLog" />
+    <bean id="parseLog" class="jphs.log.service.ParseLogs" />
     
     <!-- job的配置开始 -->
     <bean id="myJobDetail"
