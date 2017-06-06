@@ -21,7 +21,6 @@ public class ParseLogController {
 	public JSONObject insertHeipeisUser() {
 		JSONObject message = new JSONObject();
 		try {
-			String fileName = System.getProperty("user.dir") + "\\src\\access_20170601.log";
 			parseLogs.readFileByLines();
 			return InterfaceResultUtil.getReturnMapSuccess(message);
 		} catch (Exception e) {
