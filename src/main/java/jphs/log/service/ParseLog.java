@@ -18,6 +18,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import jphs.log.mapper.AccesslogMapper;
 import jphs.log.mapper.ProductMapper;
@@ -28,12 +30,16 @@ import jphs.log.pojo.ProductExample;
 import jphs.log.pojo.ProductExample.Criteria;
 import jphs.log.utils.MyPredicate;
 
+@Service
 public class ParseLog {
     @Autowired
     private ProductMapper productMapper;
 
     @Autowired
     private AccesslogMapper accesslogMapper;
+
+    @Value("${wxPath}")
+    private String path;
 
     private Logger logger = Logger.getLogger(getClass());
 
@@ -64,6 +70,7 @@ public class ParseLog {
      * @throws Exception
      */
     public void readFileByLines() {
+        System.out.println(path);
         String u = ParseLog.class.getResource("/").getPath();
         System.out.println(u);
         Calendar cal = Calendar.getInstance();
